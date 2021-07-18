@@ -2,11 +2,19 @@ public class Item {
     private String name;
     private String currency;
     private int price;
+    private Group group;
 
-    public Item (String name, String currency, int price) {
+    public Item(String name, String currency, int price) {
         this.name = name;
         this.currency = currency;
         this.price = price;
+    }
+
+    public Item(String name, String currency, int price, Group group) {
+        this.name = name;
+        this.currency = currency;
+        this.price = price;
+        this.group = group;
     }
 
     public void setName(String name) {
@@ -16,6 +24,7 @@ public class Item {
     public String getName() {
         return name;
     }
+
     public String getCurrency() {
         return currency;
     }

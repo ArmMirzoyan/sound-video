@@ -1,56 +1,77 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
+    public static void createGroupObject(String groupName, int groupId, Storage storage) {
+        Group group = new Group(groupName, groupId); // same call method, must be changed
+        storage.addGroups(group);
+    }
+
     public static void main(String[] args) {
 
-        Group people = new Group("People", "1");
-        Group nature = new Group("Nature", "2");
-
-        List<Group> listGroup = new ArrayList<>();
-        listGroup.add(people);
-        listGroup.add(nature);
-
-        System.out.println("Please enter name of the group");
-
         Scanner scan = new Scanner(System.in);
-        String a = scan.next();
-        int count = 3;
-        while (!a.equals("continue")) {
-            System.out.println("Please enter id of the parent group");
-            String b = scan.next();
-            if (!b.equals(people.getId()) || !b.equals(nature.getId())) {
-                Group groupUser = new Group(a, b);
-                listGroup.add(groupUser);
+        Storage storage = new Storage();
+        boolean unique = true;
+        do {
+            System.out.println("Please enter name of the group, or enter continue for enter name of item");
+            String groupName = scan.next();
+            if (groupName.equals("continue")) {
+                break;
             }
-            System.out.println("Please enter name of the group");
-            a = scan.next();
-            if (b.isEmpty()) {
-                ++count;
-                Group groupUser = new Group(a, Integer.toString(count));
-                listGroup.add(groupUser);
+            System.out.println("Please enter id of the group or please put enter key for enter other group name, " +
+                    "or enter continue for enter name of item");
+
+            int groupId = scan.nextInt();
+            if (Integer.toString(groupId).equals("")) {
+                Group group = new Group(groupName);
+                group.addParentGroup(new Group(groupName, new Random().nextInt(100000)));
+                storage.addGroups(group);
             }
-        }
+            if (storage.getGroups().size() != 0) {
+                for (Group grp : storage.getGroups()) {
+                    if (groupId == grp.getId()) {
+                        Group subGroup = new Group(groupName, groupId);
+                        grp.addSubGroups(subGroup);
+                        unique = false;
+                    } else {
+                        unique = true;
+                    }
+                }
+                if (unique) {
+                    createGroupObject(groupName, groupId, storage);
+                }
+            } else {
+                createGroupObject(groupName, groupId, storage);
+            }
 
-        List<Item> listItem = new ArrayList<>();
 
-        System.out.println("Please enter name of item");
-        String aI = scan.next();
-        while (!aI.equals("exit")) {
+        } while (true);
+
+        do {
+            System.out.println("Please enter name of item or enter exit for print result");
+            String itemName = scan.next();
+            if (itemName.equals("exit")) {
+                break;
+            }
             System.out.println("Please enter currency of item");
-            String bI = scan.next();
+            String itemCurrency = scan.next();
             System.out.println("Please enter price of item");
-            int cI = scan.nextInt();
+            int itemPrice = scan.nextInt();
 
-            Item items = new Item(aI, bI, cI);
-            listItem.add(items);
-            System.out.println("Please enter name of item");
-            aI = scan.next();
-        }
+            Item item = new Item(itemName, itemCurrency, itemPrice);
+            storage.addItems(item);
 
+        } while (true);
         scan.close();
-        System.out.println(listGroup);
-        System.out.println(listItem);
+
+        for (Group grp : storage.getGroups()) {
+            System.out.println(grp);
+            for (Group subGrp : grp.getSubGroups()) {
+                System.out.println(subGrp);
+            }
+        }
+        for (Item item : storage.getItems()) {
+            System.out.println(item);
+        }
     }
 }
