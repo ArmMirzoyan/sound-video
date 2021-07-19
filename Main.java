@@ -4,8 +4,8 @@ import model.Item;
 import java.util.Scanner;
 
 public class Main {
-    public static void createGroupObject(String groupName, int groupId, Storage storage) {
-        Group group = new Group(groupName); // same call method, must be changed
+    public static void createGroupObject(String groupName, Storage storage) {
+        Group group = new Group(groupName);
         storage.addGroups(group);
     }
 
@@ -40,10 +40,10 @@ public class Main {
                     }
                 }
                 if (unique) {
-                    createGroupObject(groupName, groupId, storage);
+                    createGroupObject(groupName, storage);
                 }
             } else {
-                createGroupObject(groupName, groupId, storage);
+                createGroupObject(groupName, storage);
             }
 
 
