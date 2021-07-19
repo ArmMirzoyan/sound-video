@@ -1,28 +1,23 @@
+package model;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Group {
     private int id;
+    private static int idSequence = 0;
     private String name;
     private Group parentGroup;
-    private List<Group> subGroups = new ArrayList<>();
-    private List<Item> items = new ArrayList<>();
-
-    public Group(String name, int id) {
-        this.name = name;
-        this.id = id;
-    }
+    final private List<Group> subGroups = new ArrayList<>();
+    final private List<Item> items = new ArrayList<>();
 
     public Group(String name) {
         this.name = name;
+        this.id = ++idSequence;
     }
 
     public int getId() {
         return id;
-    }
-
-    public void addId(int id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -41,8 +36,9 @@ public class Group {
         this.parentGroup = parentGroup;
     }
 
-    public void addSubGroups(Group subGroups) {
-        this.subGroups.add(subGroups);
+    public void addGroup(Group group) {
+        this.subGroups.add(group);
+        group.parentGroup = this;
     }
 
     public List<Group> getSubGroups() {
@@ -55,6 +51,6 @@ public class Group {
 
     @Override
     public String toString() {
-        return "Group Name: " + this.name + ", Group Id: " + this.id;
+        return "model.Group Name: " + this.name + ", model.Group Id: " + this.id;
     }
 }

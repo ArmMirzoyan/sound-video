@@ -1,5 +1,9 @@
+package model;
+
 public class Item {
     private String name;
+    private int id;
+    private static int idSequence = 0;
     private String currency;
     private int price;
     private Group group;
@@ -8,6 +12,7 @@ public class Item {
         this.name = name;
         this.currency = currency;
         this.price = price;
+        this.id = ++idSequence;
     }
 
     public Item(String name, String currency, int price, Group group) {
@@ -15,10 +20,15 @@ public class Item {
         this.currency = currency;
         this.price = price;
         this.group = group;
+        this.id = ++idSequence;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getName() {
@@ -43,7 +53,7 @@ public class Item {
 
     @Override
     public String toString() {
-        return "Item Name: " + this.name + ", Item currency: " + this.currency +
-                ", Item price: " + this.price;
+        return "model.Item Name: " + this.name + ", model.Item currency: " + this.currency +
+                ", model.Item price: " + this.price;
     }
 }

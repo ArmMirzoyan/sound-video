@@ -1,9 +1,11 @@
-import java.util.Random;
+import model.Group;
+import model.Item;
+
 import java.util.Scanner;
 
 public class Main {
     public static void createGroupObject(String groupName, int groupId, Storage storage) {
-        Group group = new Group(groupName, groupId); // same call method, must be changed
+        Group group = new Group(groupName); // same call method, must be changed
         storage.addGroups(group);
     }
 
@@ -24,14 +26,14 @@ public class Main {
             int groupId = scan.nextInt();
             if (Integer.toString(groupId).equals("")) {
                 Group group = new Group(groupName);
-                group.addParentGroup(new Group(groupName, new Random().nextInt(100000)));
+                group.addParentGroup(new Group(groupName));
                 storage.addGroups(group);
             }
             if (storage.getGroups().size() != 0) {
                 for (Group grp : storage.getGroups()) {
                     if (groupId == grp.getId()) {
-                        Group subGroup = new Group(groupName, groupId);
-                        grp.addSubGroups(subGroup);
+                        Group subGroup = new Group(groupName);
+                        grp.addGroup(subGroup);
                         unique = false;
                     } else {
                         unique = true;

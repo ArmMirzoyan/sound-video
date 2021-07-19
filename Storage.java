@@ -1,3 +1,6 @@
+import model.Group;
+import model.Item;
+
 import java.util.ArrayList;
 import java.util.List;
 
