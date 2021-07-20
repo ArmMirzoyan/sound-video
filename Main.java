@@ -1,3 +1,4 @@
+import model.GenerativeItem;
 import model.Group;
 import model.Item;
 
@@ -12,7 +13,7 @@ public class Main {
     public static void main(String[] args) {
 
         Scanner scan = new Scanner(System.in);
-        Storage storage = new Storage();
+        Storage storage = Storage.getInstance();
         boolean unique = true;
         do {
             System.out.println("Please enter name of the group, or enter continue for enter name of item");
@@ -26,7 +27,7 @@ public class Main {
             int groupId = scan.nextInt();
             if (Integer.toString(groupId).equals("")) {
                 Group group = new Group(groupName);
-                group.addParentGroup(new Group(groupName));
+                group.setParent(new Group(groupName));
                 storage.addGroups(group);
             }
             if (storage.getGroups().size() != 0) {
@@ -60,7 +61,7 @@ public class Main {
             System.out.println("Please enter price of item");
             int itemPrice = scan.nextInt();
 
-            Item item = new Item(itemName, itemCurrency, itemPrice);
+            GenerativeItem item = new GenerativeItem(itemName, itemCurrency, itemPrice);
             storage.addItems(item);
 
         } while (true);

@@ -4,10 +4,20 @@ import model.Item;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Storage {
+public final class Storage {
     private List<Group> groups = new ArrayList<>();
     private List<Item> items = new ArrayList<>();
+    static Storage instance = null;
 
+    private Storage() {
+    }
+
+    static public Storage getInstance() {
+        if (instance == null)
+            instance = new Storage();
+
+        return instance;
+    }
 
     public List<Group> getGroups() {
         return groups;

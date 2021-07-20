@@ -10,7 +10,6 @@ public class Group {
     private Group parentGroup;
     final private List<Group> subGroups = new ArrayList<>();
     final private List<Item> items = new ArrayList<>();
-
     public Group(String name) {
         this.name = name;
         this.id = ++idSequence;
@@ -32,21 +31,22 @@ public class Group {
         return parentGroup;
     }
 
-    public void addParentGroup(Group parentGroup) {
+    public void setParent(Group parentGroup) {
         this.parentGroup = parentGroup;
     }
 
     public void addGroup(Group group) {
         this.subGroups.add(group);
-        group.parentGroup = this;
+        group.setParent(this);
     }
 
     public List<Group> getSubGroups() {
         return subGroups;
     }
 
-    public void addItems(Item items) {
-        this.items.add(items);
+    public void addItem(GenerativeItem item) {
+        item.setGroup(this);
+        this.items.add(item);
     }
 
     @Override
