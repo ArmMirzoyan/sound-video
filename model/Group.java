@@ -10,6 +10,7 @@ public class Group {
     private Group parentGroup;
     final private List<Group> subGroups = new ArrayList<>();
     final private List<Item> items = new ArrayList<>();
+
     public Group(String name) {
         this.name = name;
         this.id = ++idSequence;
