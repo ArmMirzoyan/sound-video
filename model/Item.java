@@ -1,7 +1,5 @@
 package model;
 
-import java.lang.module.Configuration;
-
 public abstract class Item {
     private String name;
     private int id;
@@ -10,7 +8,6 @@ public abstract class Item {
     private int price;
     private Group group;
     private Configuration configuration;
-    private StockItem stockItem;
 
     public Item(String name, String currency, int price) {
         this.name = name;
@@ -63,22 +60,18 @@ public abstract class Item {
         this.group = group;
     }
 
-    public Configuration getConfiguration() {
-        return configuration;
+    public double calculatePrice() {
+        return getPrice() * configuration.getResolutions().coefficient;
     }
 
-    public void setConfiguration(Configuration configuration) {
-        this.configuration = configuration;
+    public Configuration getConfiguration(){
+        return configuration;
     }
 
     @Override
     public String toString() {
         return "model.Item Name: " + this.name + ", model.Item currency: " + this.currency +
                 ", model.Item price: " + this.price;
-    }
-
-    public double calculatePrice() {
-        return getPrice() * stockItem.getResolutionCoefficient();
     }
 
 }

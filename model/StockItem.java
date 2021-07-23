@@ -1,9 +1,6 @@
 package model;
 
-import java.lang.module.Configuration;
-
 public class StockItem extends Item {
-    private Configuration configuration;
     private int resolutionCoefficient;
 
     public StockItem(String name, String currency, int price) {
