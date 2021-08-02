@@ -5,53 +5,67 @@ import java.util.List;
 
 public class Group {
     private int id;
-    private static int idSequence = 0;
     private String name;
     private Group parentGroup;
-    final private List<Group> subGroups = new ArrayList<>();
-    final private List<Item> items = new ArrayList<>();
+    private List<Group> subGroups = new ArrayList<>();
+    private List<Item> items = new ArrayList<>();
 
-    public Group(String name) {
+    public Group(int id, String name) {
+        this.id = id;
         this.name = name;
-        this.id = ++idSequence;
     }
 
     public int getId() {
-        return id;
+        return this.id;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public Group getParentGroup() {
         return parentGroup;
     }
 
-    public void setParent(Group parentGroup) {
+    void setParentGroup(Group parentGroup) {
         this.parentGroup = parentGroup;
     }
 
-    public void addGroup(Group group) {
+    public void addSubGroup(Group group) {
         this.subGroups.add(group);
-        group.setParent(this);
+        group.setParentGroup(this);
     }
 
-    public List<Group> getSubGroups() {
-        return subGroups;
-    }
-
-    public void addItem(GenerativeItem item) {
-        item.setGroup(this);
+    public void addItem(Item item) {
         this.items.add(item);
+        item.setGroup(this);
     }
 
-    @Override
-    public String toString() {
-        return "model.Group Name: " + this.name + ", model.Group Id: " + this.id;
+    public void addItems(List<Item> items) {
+        for (Item item : items) {
+            addItem(item);
+        }
+    }
+
+    public void print(int level) {
+        System.out.printf("GROUP - id: {%d} {%s}%n", id, name);
+        printSubGroups(++level);
+        printItems(level);
+    }
+
+    private void printSubGroups(int level) {
+        String subLevelPrefix = "  ".repeat(level);
+        for (Group group : subGroups) {
+            System.out.print(subLevelPrefix);
+            group.print(level);
+        }
+    }
+
+    private void printItems(int level) {
+        String subLevelPrefix = "  ".repeat(level);
+        for (Item item : items) {
+            System.out.print(subLevelPrefix);
+            item.print();
+        }
     }
 }

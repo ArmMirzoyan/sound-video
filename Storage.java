@@ -1,37 +1,53 @@
 import model.Group;
-import model.Item;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public final class Storage {
-    private List<Group> groups = new ArrayList<>();
-    private List<Item> items = new ArrayList<>();
-    static Storage instance = null;
+public class Storage {
+
+    private static Storage sInstance;
+
+    private final List<Group> groups = new ArrayList<>();
+
+    public static Storage getInstance() {
+        if (sInstance == null) {
+            sInstance = new Storage();
+        }
+
+        return sInstance;
+    }
+
+    public void addGroup(Group group) {
+        this.groups.add(group);
+    }
+
+    public void addGroupAll(List<Group> groups) {
+        this.groups.addAll(groups);
+    }
+
+    public Group findGroupById(int groupId) {
+        for (Group group: groups) {
+            if (group.getId() == groupId) {
+                return group;
+            }
+        }
+
+        return null;
+    }
+
+    public List<Group> getGroupsHierarchy() {
+        List<Group> rootGroups = new ArrayList<>();
+
+        for (Group group: groups) {
+            if (group.getParentGroup() == null) {
+                rootGroups.add(group);
+            }
+        }
+
+        return rootGroups;
+    }
 
     private Storage() {
-    }
 
-    static public Storage getInstance() {
-        if (instance == null)
-            instance = new Storage();
-
-        return instance;
-    }
-
-    public List<Group> getGroups() {
-        return groups;
-    }
-
-    public void addGroups(Group groups) {
-        this.groups.add(groups);
-    }
-
-    public List<Item> getItems() {
-        return items;
-    }
-
-    public void addItems(Item items) {
-        this.items.add(items);
     }
 }

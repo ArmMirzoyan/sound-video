@@ -1,77 +1,58 @@
 package model;
 
 public abstract class Item {
-    private String name;
     private int id;
-    private static int idSequence = 0;
-    private String currency;
-    private int price;
+    private int basePrice;
+    private String name;
+    private String imageUrl;
     private Group group;
-    private Configuration configuration;
 
-    public Item(String name, String currency, int price) {
+    public Item(int id, int basePrice, String name) {
+        this.id = id;
+        this.basePrice = basePrice;
         this.name = name;
-        this.currency = currency;
-        this.price = price;
-        this.id = ++idSequence;
-    }
-
-    public Item(String name, String currency, int price, Group group) {
-        this.name = name;
-        this.currency = currency;
-        this.price = price;
-        this.group = group;
-        this.id = ++idSequence;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public int getId() {
         return id;
     }
 
-    public String getCurrency() {
-        return currency;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setCurrency(String currency) {
-        this.currency = currency;
+    public int getBasePrice() {
+        return basePrice;
     }
 
-    public int getPrice() {
-        return price;
+    public void setBasePrice(int basePrice) {
+        this.basePrice = basePrice;
     }
 
-    public void setPrice(int price) {
-        this.price = price;
+    public String getName() {
+        return name;
     }
 
-    public Group getGroup() {
-        return group;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setGroup(Group group) {
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    void setGroup(Group group) {
         this.group = group;
     }
 
-    public double calculatePrice() {
-        return getPrice() * configuration.getResolutions().coefficient;
-    }
+    public abstract int calculatePrice(Configuration configuration);
 
-    public Configuration getConfiguration(){
-        return configuration;
+    public void print() {
+        System.out.printf("ITEM(%s) - id: {%d} {%s} {%d}%n",
+                this.getClass().getSimpleName(), id, name, basePrice);
     }
-
-    @Override
-    public String toString() {
-        return "model.Item Name: " + this.name + ", model.Item currency: " + this.currency +
-                ", model.Item price: " + this.price;
-    }
-
 }

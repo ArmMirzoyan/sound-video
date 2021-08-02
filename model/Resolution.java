@@ -5,8 +5,13 @@ public enum Resolution {
     FHD(2),
     _4K(4);
 
-    int coefficient;
+    private final int coefficient;
 
-    Resolution(int i) {
+    Resolution(int coefficient) {
+        this.coefficient = coefficient;
+    }
+
+    public int getCoefficient() {
+        return coefficient;
     }
 }

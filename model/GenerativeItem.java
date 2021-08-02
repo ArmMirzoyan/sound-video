@@ -1,26 +1,23 @@
 package model;
 
 public class GenerativeItem extends Item {
-    private double complexity;
 
-    public GenerativeItem(String name, String currency, int price) {
-        super(name, currency, price);
-    }
+    private double complexity = 1;
 
-    public GenerativeItem(String name, String currency, int price, Group group) {
-        super(name, currency, price, group);
+    public GenerativeItem(int id, int basePrice, String name) {
+        super(id, basePrice, name);
     }
 
     public double getComplexity() {
-        return complexity * (Math.random() + 1);
+        return complexity;
     }
 
-    public int getResolutionCoefficient() {
-        return getConfiguration().getResolutions().coefficient;
+    public void setComplexity(double complexity) {
+        this.complexity = complexity;
     }
 
     @Override
-    public double calculatePrice() {
-        return getPrice() * getResolutionCoefficient() * getComplexity();
+    public int calculatePrice(Configuration configuration) {
+        return (int) (getBasePrice() * complexity * configuration.getResolution().getCoefficient());
     }
 }
