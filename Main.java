@@ -2,6 +2,7 @@ import model.*;
 import mock.ItemMock;
 import mock.GroupMock;
 import mock.ConfigurationMock;
+import util.MyException;
 
 import javax.swing.*;
 import java.util.Arrays;
@@ -31,16 +32,12 @@ public class Main {
 //        for (Item item.csv : items) {
 //            basket.add(new BasketItem(item.csv, ConfigurationMock.getConfiguration()));
 //        }
-        File file = new File("C:\\Users\\Aram\\IdeaProjects\\Lesson4\\src\\resources_directory\\item.csv");
-        Scanner sc = null;
-        try {
-            sc = new Scanner(file);
+        File file = new File("./src/resources_directory/item.csv");
+        try (Scanner sc = new Scanner(file)) {
             while (sc.hasNextLine()) {
                 String str = sc.nextLine();
                 String[] arrOfStr = str.split(",");
-                System.out.println(Arrays.toString(arrOfStr));
                 Group group = new Group(Integer.parseInt(arrOfStr[4]), arrOfStr[2]);
-
 
                 Item item = ItemMock.getItem(GenerativeItem.class);
                 item.setId(Integer.parseInt(arrOfStr[0]));
@@ -56,9 +53,7 @@ public class Main {
             }
 
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            throw new MyException(e.getMessage());
         }
-
-
     }
 }
